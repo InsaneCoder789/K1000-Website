@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { X } from "lucide-react";
 import { leadership } from "@/data/leadership";
+import SharedHeader from "../../../components/ui/SharedHeader";
 
-// Original Blue Palette: 
-// Cyan-Blue: #00f7ff / Deep Blue: #00E5FF
 const conthrax = "font-['Conthrax',_sans-serif]";
+const orbitron = "font-['Orbitron',_sans-serif]";
 
 export default function AboutPage() {
+  const router = useRouter();
   const [selectedMember, setSelectedMember] = useState<any | null>(null);
 
   useEffect(() => {
@@ -22,6 +25,14 @@ export default function AboutPage() {
       document.body.style.overflow = "unset";
     }
   }, [selectedMember]);
+
+  const sectionVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { duration: 0.5, ease: "easeOut" } 
+    },
+  };
 
   const board = [
     {
@@ -48,162 +59,143 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center space-y-16 md:space-y-40 py-6 md:py-10 font-sans bg-black overflow-x-hidden">
+    <div className="flex flex-col items-center w-full bg-black text-white selection:bg-cyan-500/30 overflow-x-hidden relative">
+      
+      <SharedHeader />
 
-      {/* ─── SECTION 1: HERO ─── */}
-      <section className="relative w-[92%] md:w-[95%] h-[50vh] md:h-[60vh] rounded-[24px] md:rounded-[40px] overflow-hidden border border-cyan-500/20 mx-auto shadow-[0_0_50px_rgba(0,247,255,0.1)]">
-        <img 
-          src="/about/KIIT.jpg" 
-          className="absolute inset-0 size-full object-cover brightness-[0.3]" 
-          alt="KIIT" 
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-          <motion.h1 
-            initial={{ opacity: 0, scale: 0.9 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            className={`${conthrax} text-5xl sm:text-6xl md:text-8xl tracking-tighter text-white uppercase flex flex-col md:block`}
-          >
-            ABOUT <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f7ff] to-[#00E5FF] drop-shadow-[0_0_15px_rgba(0,247,255,0.5)]">K1000</span>
-          </motion.h1>
-          <p className={`${conthrax} text-cyan-400/50 mt-4 tracking-[0.2em] md:tracking-[0.4em] text-[10px] md:text-sm uppercase`}>
-            Vision • Innovation • Excellence
-          </p>
-        </div>
-      </section>
+      {/* ─── PERSISTENT CLOSE OVERLAY ─── */}
+      <div className="fixed bottom-10 left-0 w-full flex justify-center z-[200] pointer-events-none px-4">
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => router.push("/")}
+          className="pointer-events-auto group flex items-center gap-5 bg-black/80 backdrop-blur-2xl border border-white/20 px-10 py-4 rounded-full hover:border-white transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.9)]"
+        >
+          <X className="text-white group-hover:rotate-90 transition-all duration-300" size={20} />
+          <span className={`${conthrax} text-[13px] md:text-[15px] tracking-[0.5em] uppercase text-white font-bold transition-all duration-300 group-hover:drop-shadow-[0_0_10px_white]`}>
+            CLOSE
+          </span>
+        </motion.button>
+      </div>
 
-      {/* ─── SECTION 2: FOUNDER ─── */}
-      <section className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center px-6">
-        <div className="relative w-full aspect-[4/5] md:h-[550px] md:aspect-auto rounded-[32px] md:rounded-[48px] overflow-hidden bg-[#050505]">
-          <img
-            src="/about/Founder.png"
-            className="size-full object-cover object-top md:object-center"
-            alt="Founder"
-          />
-        </div>
-        <div className="space-y-6 text-center md:text-left">
-          <h2 className={`${conthrax} text-3xl md:text-6xl text-white uppercase tracking-tighter`}>
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f7ff] to-[#00E5FF]">Founder</span>
-          </h2>
-          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-[#00f7ff] to-[#00E5FF] shadow-[0_0_15px_#00f7ff] mx-auto md:mx-0" />
-          <div className="space-y-4">
-            <span className={`${conthrax} text-cyan-400 block text-base md:text-lg tracking-widest uppercase`}>
-              Prof. Dr. Achyuta Samanta
-            </span>
-            <p className="text-sm md:text-xl text-white/70 font-light leading-relaxed">
-              Starting with just Rs 5000, he built a global legacy. His journey from poverty to the pinnacle of education serves as the heartbeat of KIIT's mission to transform lives through knowledge.
+      {/* ─── SECTION 1: HERO (Adjusted Top Padding) ─── */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={sectionVariants}
+        className="w-full flex flex-col items-center px-0 md:px-6 pt-24 md:pt-32 lg:pt-40"
+      >
+        <div className="relative w-[92%] md:w-full h-[40vh] md:aspect-[21/7] md:max-h-[500px] md:rounded-[40px] overflow-hidden border border-cyan-500/20 bg-black">
+          <img src="/about/KIIT.jpg" className="absolute inset-0 w-full h-full object-cover brightness-[0.3]" alt="KIIT Campus" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+          <div className="relative z-10 flex flex-col items-center justify-center text-center p-6 h-full">
+            <h1 className={`${conthrax} text-4xl sm:text-5xl md:text-7xl tracking-tighter text-white uppercase`}>
+              ABOUT <span className="text-cyan-400 drop-shadow-[0_0_15px_#00f7ff]">K-1000</span>
+            </h1>
+            <p className={`${orbitron} text-cyan-400/50 mt-4 tracking-[0.3em] md:tracking-[0.5em] text-[10px] md:text-sm uppercase`}>
+              Vision • Innovation • Excellence
             </p>
           </div>
         </div>
-      </section>
+      </motion.section>
+
+      {/* ─── SECTION 2: FOUNDER ─── */}
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={sectionVariants}
+        className="w-full px-6 md:px-20 py-12 md:py-20 flex flex-col items-center border-t border-white/5"
+      >
+        <div className="w-full max-w-[1400px] grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+          <div className="relative overflow-hidden rounded-xl md:rounded-[32px] border border-cyan-500/10">
+            <img src="/about/Founder.png" className="w-full aspect-[4/5] object-cover object-top brightness-90 shadow-2xl" alt="Founder" />
+          </div>
+          <div className="space-y-6">
+            <h2 className={`${conthrax} text-2xl md:text-5xl text-white uppercase leading-tight tracking-wider`}>
+              OUR <span className="text-cyan-400">FOUNDER</span>
+            </h2>
+            <div className="w-20 h-1 bg-cyan-400 shadow-[0_0_10px_#00f7ff]" />
+            <span className={`${orbitron} text-cyan-400 block text-sm md:text-lg tracking-widest uppercase`}>
+              Prof. Dr. Achyuta Samanta
+            </span>
+            <p className="text-sm md:text-lg text-white/50 leading-relaxed font-light tracking-wide text-justify">
+              Prof. Dr. Achyuta Samanta's life story reads like a powerful saga of grit, determination, and social responsibility. Born and brought up in poverty in a remote village in Odisha, he was dealt a cruel blow at the tender age of four when he lost his father, after which his life became a struggle for food and education for 15 long years. However, he persevered, and at the age of 22, joined teaching. At 25, he embarked on a journey that would change his own life, and the lives of thousands of people. With just Rs 5000 in his pocket, he started KIIT (Kalinga Institute of Industrial Technology) and KISS (Kalinga Institute of Social Sciences) in two rented houses.
+            </p>
+          </div>
+        </div>
+      </motion.section>
 
       {/* ─── SECTION 3: BOARD MEMBERS ─── */}
-      <section className="w-full max-w-[1400px] px-6">
-        <h2 className={`${conthrax} text-center text-2xl md:text-5xl tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#00f7ff] to-[#00E5FF] mb-12 md:mb-16 uppercase`}>
+      <motion.section 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={sectionVariants}
+        className="w-full max-w-7xl px-6 md:px-10 py-12 md:py-16 flex flex-col items-center"
+      >
+        <h2 className={`${conthrax} text-2xl md:text-4xl text-center tracking-[0.3em] text-cyan-400 mb-10 md:mb-14 uppercase`}>
           Board Members
         </h2>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
           {board.map((m) => (
             <motion.div
               key={m.id}
               onClick={() => setSelectedMember(m)}
-              whileHover={{ y: -10 }}
-              className="cursor-pointer flex flex-col items-center w-full max-w-[320px] group"
+              whileHover={{ y: -8 }}
+              className="cursor-pointer flex flex-col items-center group"
             >
-              <div className="w-full aspect-[4/5] rounded-[32px] overflow-hidden border border-white/10 bg-[#0a0a0a] group-hover:border-cyan-500/50 transition-all duration-300 shadow-2xl">
-                <img 
-                  src={m.image} 
-                  className="size-full object-cover object-top transition-all duration-500 group-hover:scale-105" 
-                  alt={m.name}
-                />
+              <div className="w-full aspect-[4/5] rounded-[24px] overflow-hidden border border-white/5 bg-[#0a0a0a] group-hover:border-cyan-500/50 transition-all duration-300 shadow-2xl">
+                <img src={m.image} className="size-full object-cover object-top transition-all duration-500 group-hover:scale-105" alt={m.name} />
               </div>
-              <h3 className={`${conthrax} text-base md:text-lg text-white mt-6 text-center tracking-wide leading-tight group-hover:text-cyan-400 transition-colors`}>
+              <h3 className={`${conthrax} text-sm md:text-lg text-white mt-5 text-center tracking-wide group-hover:text-cyan-400 transition-colors uppercase leading-tight`}>
                 {m.name}
               </h3>
-              <p className={`${conthrax} text-blue-400/60 text-[9px] md:text-[10px] uppercase mt-2 tracking-widest`}>
+              <p className={`${orbitron} text-cyan-400 text-[11px] md:text-[13px] uppercase mt-2 tracking-[0.2em] font-semibold text-center`}>
                 {m.position}
               </p>
             </motion.div>
           ))}
         </div>
-
-        <AnimatePresence>
-          {selectedMember && (
-            <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedMember(null)}
-                className="absolute inset-0 bg-black/98 backdrop-blur-md cursor-pointer"
-              />
-              <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                onClick={() => setSelectedMember(null)}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="relative w-full max-w-[900px] max-h-[90vh] bg-[#050505] border border-cyan-500/30 rounded-[32px] md:rounded-[40px] overflow-y-auto md:overflow-hidden shadow-[0_0_100px_rgba(0,247,255,0.2)] flex flex-col md:flex-row cursor-pointer will-change-transform"
-              >
-                <div className="w-full md:w-[45%] h-[350px] md:h-auto overflow-hidden">
-                  <img src={selectedMember.image} className="size-full object-cover object-top" alt={selectedMember.name} />
-                </div>
-                <div className="flex-1 p-6 md:p-12 flex flex-col justify-center space-y-4 md:space-y-6">
-                  <div>
-                    <h3 className={`${conthrax} text-xl md:text-3xl text-white leading-tight`}>{selectedMember.name}</h3>
-                    <p className={`${conthrax} text-transparent bg-clip-text bg-gradient-to-r from-[#00f7ff] to-[#00E5FF] text-[10px] md:text-xs mt-2 tracking-widest uppercase font-bold`}>{selectedMember.position}</p>
-                  </div>
-                  <div className="h-px w-16 md:w-20 bg-gradient-to-r from-cyan-500 to-blue-500" />
-                  <p className="text-white/70 text-sm md:text-base leading-relaxed font-light text-justify">
-                    {selectedMember.description}
-                  </p>
-                  <p className={`${conthrax} text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.4em] text-center pt-2`}>Tap to close</p>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
-      </section>
+      </motion.section>
 
       {/* ─── SECTION 4: CORE TEAM ─── */}
-      <section className="w-full max-w-[1400px] px-4 md:px-6">
-        <h2 className={`${conthrax} text-center text-4xl md:text-8xl mb-16 md:mb-32 text-white uppercase tracking-tighter`}>
-          CORE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f7ff] to-[#00E5FF]">TEAM</span>
+      <section className="w-full max-w-[1400px] px-6 py-12 md:py-20 border-t border-white/5">
+        <h2 className={`${conthrax} text-center text-4xl md:text-7xl mb-12 md:mb-20 text-white uppercase tracking-tighter`}>
+          CORE <span className="text-cyan-400">TEAM</span>
         </h2>
 
         {leadership.hierarchy.map((grp, gi) => (
-          <div key={gi} className="w-full flex flex-col items-center mb-24 md:mb-40">
-            <h3 className={`${conthrax} text-base md:text-2xl lg:text-3xl mb-12 md:mb-16 text-white/90 border-b border-cyan-500/20 pb-3 px-6 md:px-10 tracking-[0.2em] uppercase text-center`}>
+          <div key={gi} className="w-full flex flex-col items-center mb-16 md:mb-24">
+            <h3 className={`${conthrax} text-base md:text-xl mb-10 text-white/90 border-b border-cyan-500/20 pb-2 px-8 tracking-[0.2em] uppercase text-center`}>
               {grp.title}
             </h3>
 
-            <div className={`grid grid-cols-1 sm:grid-cols-2 ${grp.title.toLowerCase().includes("executive") ? "lg:grid-cols-2 max-w-[900px]" : "lg:grid-cols-3 max-w-[1300px]"} gap-10 md:gap-14 w-full`}>
+            <div className={`grid grid-cols-1 sm:grid-cols-2 ${grp.title.toLowerCase().includes("executive") ? "lg:grid-cols-2 max-w-[800px]" : "lg:grid-cols-3 max-w-[1200px]"} gap-10 w-full`}>
               {grp.members.map((m, mi) => (
                 <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   key={mi} 
                   className="flex flex-col items-center text-center group"
                 >
-                  <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-[32px] md:rounded-[48px] overflow-hidden border-2 border-white/5 group-hover:border-cyan-400 transition-all duration-500 shadow-2xl bg-[#0a0a0a]">
-                    <img 
-                      src={m.image} 
-                      className="size-full object-cover object-top brightness-90 group-hover:scale-110 group-hover:brightness-100 transition-all duration-700" 
-                      alt={m.name} 
-                    />
+                  <div className="w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 rounded-[28px] md:rounded-[40px] overflow-hidden border border-white/5 group-hover:border-cyan-400 transition-all duration-500 shadow-2xl bg-[#0a0a0a]">
+                    <img src={m.image} className="size-full object-cover object-top brightness-90 group-hover:scale-110 group-hover:brightness-100 transition-all duration-700" alt={m.name} />
                   </div>
-
-                  <div className="mt-6 md:mt-8 space-y-2">
-                    <h4 className={`${conthrax} text-sm md:text-lg lg:text-xl text-white tracking-wide leading-tight px-2 group-hover:text-blue-400 transition-colors`}>{m.name}</h4>
-                    <p className={`${conthrax} text-transparent bg-clip-text bg-gradient-to-r from-[#00f7ff] to-[#00E5FF] text-[9px] md:text-xs tracking-widest uppercase font-bold`}>
+                  <div className="mt-6 space-y-2">
+                    <h4 className={`${conthrax} text-sm md:text-lg text-white tracking-wide group-hover:text-cyan-400 transition-colors uppercase`}>{m.name}</h4>
+                    <p className={`${orbitron} text-cyan-400 text-[10px] md:text-[12px] tracking-[0.15em] uppercase font-bold`}>
                       {m.position}
                     </p>
                     {m.branch && (
-                      <p className={`${conthrax} text-white/30 text-[8px] md:text-[9px] uppercase tracking-widest`}>
-                        {m.branch}
-                      </p>
+                        <p className={`${orbitron} text-white/30 text-[8px] md:text-[9px] uppercase tracking-widest`}>
+                            {m.branch}
+                        </p>
                     )}
                   </div>
                 </motion.div>
@@ -213,11 +205,9 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <div className="pb-16 text-center px-4">
-        <p className={`${conthrax} text-[8px] md:text-[10px] tracking-[0.5em] md:tracking-[1.5em] text-cyan-500/20 uppercase`}>
-          Train • Transform • Transcend
-        </p>
-      </div>
+      <footer className="w-full py-12 border-t border-white/5 flex justify-center opacity-20">
+        <p className={`${conthrax} text-[8px] md:text-[10px] tracking-[1.5em] md:tracking-[2em]`}>TRAIN . TRANSFORM . TRANSCEND</p>
+      </footer>
     </div>
   );
 }

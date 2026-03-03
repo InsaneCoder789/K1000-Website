@@ -2,10 +2,11 @@
 
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import data from "@/data/data.json"; 
-
+import SharedHeader from "../../../components/ui/SharedHeader";
 import {
-  Rocket, FileText, BookOpen, Star, Award, Globe, Lightbulb, Users, LucideIcon
+  Rocket, FileText, BookOpen, Star, Award, Globe, Lightbulb, Users, LucideIcon, X
 } from "lucide-react";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -16,6 +17,7 @@ const conthrax = "font-['Conthrax',_sans-serif]";
 const orbitron = "font-['Orbitron',_sans-serif]";
 
 export default function HomePage() {
+  const router = useRouter();
   const { benefits } = data;
   
   const stats = [
@@ -25,8 +27,6 @@ export default function HomePage() {
     { number: "20+", label: "Collaborations" },
   ];
 
-  // FIX: Optimized variants for performance
-  // Removed 'y' offset for desktop or reduced it to prevent heavy layout recalculations
   const sectionVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -45,22 +45,44 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full bg-black text-white selection:bg-cyan-500/30 overflow-x-hidden">
+    <div className="flex flex-col items-center w-full bg-black text-white selection:bg-cyan-500/30 overflow-x-hidden relative">
       
+      {/* ─── SHARED HEADER ─── */}
+      <SharedHeader />
+
+      {/* ─── PERSISTENT ROUNDED RECTANGLE OVERLAY ─── */}
+      <div className="fixed bottom-10 left-0 w-full flex justify-center z-[200] pointer-events-none px-4">
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => router.push("/")}
+          className="pointer-events-auto group flex items-center gap-5 bg-black/80 backdrop-blur-2xl border border-white/20 px-10 py-4 rounded-full hover:border-white transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.9)]"
+        >
+          {/* X icon on the LEFT */}
+          <X className="text-white group-hover:rotate-90 transition-all duration-300" size={20} />
+          
+          <span className={`${conthrax} text-[13px] md:text-[15px] tracking-[0.5em] uppercase text-white font-bold transition-all duration-300 group-hover:drop-shadow-[0_0_10px_white]`}>
+            CLOSE
+          </span>
+        </motion.button>
+      </div>
+
       {/* ─── SECTION 1: HERO ─── */}
       <motion.section 
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }} // Added margin so it triggers earlier/smoother
+        viewport={{ once: true, margin: "-100px" }} 
         variants={sectionVariants}
-        className="w-full flex flex-col items-center px-0 md:px-6 pt-0 md:pt-10 will-change-[opacity,transform]"
+        className="w-full flex flex-col items-center px-0 md:px-6 pt-0 md:pt-24 lg:pt-32 will-change-[opacity,transform]"
       >
         <div className="relative w-full min-h-[85vh] md:min-h-0 md:aspect-[21/9] md:max-h-[700px] md:rounded-[40px] overflow-hidden border-b md:border border-cyan-500/20 bg-black">
           <img
             src="/hero/hero-2.jpg"
             className="absolute inset-0 w-full h-full object-cover brightness-[0.35] md:brightness-50"
             alt="Hero Background"
-            loading="eager" // Load hero immediately
+            loading="eager"
           />
           
           <div className="relative z-10 flex flex-col items-center justify-center text-center p-6 w-full h-full min-h-[85vh] md:min-h-0">
@@ -150,7 +172,7 @@ export default function HomePage() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={sectionVariants}
-        className="w-full max-w-7xl pb-32 px-6 md:px-10 flex flex-col items-center will-change-transform"
+        className="w-full max-w-7xl pb-40 px-6 md:px-10 flex flex-col items-center will-change-transform"
       >
         <h2 className={`${conthrax} text-2xl md:text-4xl text-center tracking-[0.2em] text-cyan-400 mb-16 md:mb-24 uppercase`}>
           Benefits & Perks
