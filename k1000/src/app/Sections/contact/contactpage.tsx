@@ -55,15 +55,15 @@ const Contact = () => {
               <div className="relative z-10 max-w-2xl">
                 <div className="flex items-center gap-3 mb-8">
                   <div className="h-px w-12 bg-cyan-500/40" />
-                  <span className={`${conthrax} text-cyan-500 text-[10px] tracking-[0.5em] uppercase`}>Comm-Protocol</span>
+                  <span className={`${conthrax} text-cyan-500 text-[10px] tracking-[0.5em] uppercase`}>INITIATION</span>
                 </div>
                 
                 <h2 className={`${conthrax} text-2xl md:text-3xl text-white mb-6 uppercase`}>
-                  Secure Uplink <span className="opacity-40">Request</span>
+                  CONTACT <span className="opacity-40">Request</span>
                 </h2>
                 
                 <p className="text-white/50 text-base md:text-xl font-light leading-relaxed mb-10">
-                  K1000 is KIIT University's flagship tech & innovation society.
+                  K-1000 is KIIT University's flagship tech & innovation society.
                   Reach out to our team for collaborations, research, and opportunities.
                   We're always ready to connect.
                 </p>
