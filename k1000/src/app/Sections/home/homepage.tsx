@@ -65,7 +65,7 @@ export default function HomePage() {
           
           <div className="relative z-10 flex flex-col items-center justify-center text-center p-6 w-full h-full min-h-[85vh] md:min-h-0">
             <p className={`${orbitron} text-cyan-400 tracking-[0.3em] md:tracking-[0.5em] text-[8px] md:text-[10px] mb-4 md:mb-6 uppercase`}>
-              System Initialization: KIIT Elite Engineering
+              KIIT Elite's R&D - Engineering Program
             </p>
             
             <h1 className={`${conthrax} text-3xl sm:text-4xl md:text-7xl tracking-widest text-white mb-6 leading-tight`}>
@@ -74,7 +74,7 @@ export default function HomePage() {
 
             <p className="text-white/70 max-w-xl text-xs md:text-lg leading-relaxed mb-10 font-light tracking-wide px-4">
               Innovation • Research • Real-world Engineering <br className="hidden md:block"/>
-              The official R&D guild of KIIT University.
+              The official R&D Guild of KIIT University.
             </p>
 
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 w-full md:w-auto px-10 md:px-0">

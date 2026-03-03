@@ -37,7 +37,7 @@ export default function SystemCanvas() {
   const [logs, setLogs] = useState<string[]>(["NEURAL_LINK_STABLE", "SYNCING_CORE..."]);
   const [typed, setTyped] = useState("");
   
-  const text = "SYSTEM ONLINE • NEURAL LINK ESTABLISHED • PROTOCOL v4.5";
+  const text = "SYSTEM ONLINE • NEURAL LINK ESTABLISHED • PROTOCOL v26";
 
   const rawDomain = domains.find(d => d.key === activeDomainKey);
   const activeNode = [...LEFT_NODES, ...RIGHT_NODES].find(n => n.key === activeDomainKey);
@@ -159,12 +159,12 @@ export default function SystemCanvas() {
                   <div className={`w-[280px] md:w-[300px] h-[400px] md:h-[420px] bg-[#020205] border-[2px] rounded-[36px] transition-all duration-500 flex flex-col overflow-hidden ${isCoreHovered ? 'border-white shadow-[0_0_80px_rgba(255,255,255,0.2)] scale-[1.02]' : 'border-cyan-500/30'}`}>
                     <div className="h-9 border-b border-white/10 flex items-center px-6 justify-between text-cyan-400 shrink-0">
                       <Activity size={12} className="animate-pulse" />
-                      <span className="text-[7px] tracking-[0.5em] font-black uppercase">Core_Neural_Link</span>
+                      <span className="text-[7px] tracking-[0.5em] font-black uppercase">Core Capsulate</span>
                     </div>
                     <div className="flex-1 flex flex-col items-center justify-center relative">
                       <motion.div animate={{ opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 4, repeat: Infinity }} className="absolute w-36 h-36 bg-cyan-500 blur-[80px] rounded-full" />
                       <img src="/k1000-small.png" className="w-32 md:w-36 h-auto brightness-150 relative z-10" />
-                      <div className="mt-8 text-[10px] tracking-[0.7em] font-black text-cyan-500/60 uppercase">System_v4.5</div>
+                      <div className="mt-8 text-[10px] tracking-[0.7em] font-black text-cyan-500/60 uppercase">VERSION_2026</div>
                     </div>
                   </div>
                 </button>

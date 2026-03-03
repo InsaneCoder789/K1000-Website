@@ -30,14 +30,14 @@ export default function GlobalHoloPanel({ page, onClose }: Props) {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-auto"
     >
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose} />
 
       <motion.div
         initial={{ scale: 0.98, opacity: 0, y: 10 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.98, opacity: 0, y: 10 }}
-        className="relative w-[98vw] h-[96vh] bg-[#050505]/60 border border-[#00f7ff]/20 
-                   rounded-[40px] shadow-[0_0_100px_rgba(0,247,255,0.1)] overflow-hidden"
+        className="relative w-[100vw] h-[100vh] md:w-[98vw] md:h-[96vh] bg-[#0a0a0a] border border-white/10 
+                   md:rounded-[40px] shadow-2xl overflow-hidden flex flex-col"
       >
         {/* 1. CUSTOM SCROLLBAR STYLING */}
         <style jsx global>{`
@@ -45,49 +45,48 @@ export default function GlobalHoloPanel({ page, onClose }: Props) {
             width: 4px;
           }
           .custom-scroll::-webkit-scrollbar-track {
-            background: rgba(0, 247, 255, 0.02);
-            margin: 40px 0; /* Keeps scrollbar away from the rounded corners */
+            background: rgba(255, 255, 255, 0.02);
+            margin: 20px 0;
           }
           .custom-scroll::-webkit-scrollbar-thumb {
-            background: rgba(0, 247, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
           }
           .custom-scroll::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 247, 255, 0.6);
+            background: rgba(255, 255, 255, 0.4);
           }
         `}</style>
 
-        {/* 2. GRADIENT MASKING (Fades content at top/bottom) */}
-        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#050505] to-transparent z-10 pointer-events-none opacity-80" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#050505] to-transparent z-10 pointer-events-none opacity-90" />
+        {/* 2. GRADIENT MASKING (Subtle fade for edge transitions) */}
+        <div className="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-[#0a0a0a] to-transparent z-10 pointer-events-none opacity-60" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10 pointer-events-none opacity-80" />
 
-        {/* 3. SCROLLABLE CONTENT AREA */}
-        <div className="w-full h-full overflow-y-auto custom-scroll p-8 md:p-16 pb-40 relative">
+        {/* 3. SCROLLABLE CONTENT AREA - Padding removed to allow components to fit the panel edge-to-edge if designed so */}
+        <div className="flex-1 w-full h-full overflow-y-auto custom-scroll relative">
           {PageComponent ? <PageComponent /> : (
             <div className="h-full flex items-center justify-center">
-                <p className="text-[#00f7ff] tracking-widest animate-pulse font-mono">ERROR: MODULE_NOT_FOUND</p>
+                <p className="text-white/40 tracking-widest font-mono uppercase text-sm">Error: Module_Not_Found</p>
             </div>
           )}
         </div>
 
         {/* 4. FLOATING CLOSE BUTTON */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[310]">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[310]">
           <motion.button
             onClick={onClose}
             whileHover={{ 
               scale: 1.05, 
-              backgroundColor: "rgba(0, 247, 255, 0.15)",
-              borderColor: "#00f7ff" 
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              borderColor: "rgba(255, 255, 255, 0.4)" 
             }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-3 px-10 py-3 rounded-full border border-[#00f7ff]/40 
-                       bg-black/80 backdrop-blur-xl shadow-[0_0_30px_rgba(0,247,255,0.3)] 
+            className="flex items-center gap-3 px-10 py-3 rounded-full border border-white/20 
+                       bg-black/80 backdrop-blur-xl shadow-xl 
                        transition-all group pointer-events-auto"
           >
-            <X className="w-4 h-4 text-[#00f7ff] group-hover:rotate-90 transition-transform duration-300" />
-            <span className="text-[11px] uppercase tracking-[0.4em] text-[#00f7ff] font-black">
-              Close
+            <X className="w-4 h-4 text-white group-hover:rotate-90 transition-transform duration-300" />
+            <span className="text-[11px] uppercase tracking-[0.4em] text-white font-black">
+              CLOSE
             </span>
           </motion.button>
         </div>

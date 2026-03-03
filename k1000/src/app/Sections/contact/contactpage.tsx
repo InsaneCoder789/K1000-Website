@@ -1,111 +1,186 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Cpu } from "lucide-react";
+import { MapPin, Phone, Mail, Cpu, Globe, Terminal, Shield, Zap, Activity } from "lucide-react";
 
 const conthrax = "font-['Conthrax',_sans-serif]";
 
 const Contact = () => {
-  return (
-    <div className="fixed inset-0 w-full h-screen overflow-hidden bg-black flex items-center justify-center p-6 font-sans">
-      {/* ─── ATMOSPHERIC BACKGROUND ─── */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-cyan-500/10 blur-[150px] rounded-full opacity-40 pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_black_90%)] pointer-events-none" />
+  const [mounted, setMounted] = useState(false);
 
-      {/* ─── MAIN CONSOLE ─── */}
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    /* fixed inset-0 and overflow-hidden ensures the page is locked/non-scrollable */
+    <div className="fixed inset-0 w-full h-screen bg-black flex items-center justify-center p-4 md:p-10 font-sans overflow-hidden relative">
+      {/* ─── CYBERNETIC BACKGROUND ─── */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_#00f7ff08_0%,_transparent_70%)] pointer-events-none" />
+      
+      {/* Scanning Line Effect */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        <div className="w-full h-[2px] bg-cyan-500/20 absolute top-0 animate-[scan_8s_linear_infinite]" />
+      </div>
+
+      <style jsx global>{`
+        @keyframes scan {
+          from { top: -10%; }
+          to { top: 110%; }
+        }
+      `}</style>
+
+      {/* ─── MAIN TACTICAL INTERFACE ─── */}
       <motion.div
-        className="relative z-10 w-full max-w-6xl flex flex-col lg:flex-row items-stretch bg-[#050505] rounded-[40px] overflow-hidden border border-cyan-500/30 shadow-[0_0_100px_rgba(0,247,255,0.15)]"
-        initial={{ opacity: 0, scale: 0.95 }}
+        /* Added mt-12 to shift the content a little below as requested */
+        className="relative z-10 w-full max-w-7xl flex flex-col items-center justify-center mt-12"
+        initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* ─── IMAGE SECTION: Using object-fill ─── */}
-        <div className="lg:w-1/2 relative bg-[#080808] border-b lg:border-b-0 lg:border-r border-white/5 overflow-hidden">
-          <div className="h-full w-full relative">
-            <img
-              src="https://crf.kiit.ac.in/wp-content/uploads/2022/01/KIIT-Research-Development-1.jpg"
-              alt="KIIT Research Office"
-              /* Use style={{ objectFit: 'fill' }} because Tailwind's default 
-                 is object-cover. This prevents any zooming. */
-              style={{ objectFit: 'fill' }}
-              className="absolute inset-0 w-full h-full brightness-[0.5] contrast-[1.1]"
-            />
-            
-            {/* Tactical Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-            
-            <div className="absolute bottom-8 left-8">
-              <div className="flex items-center space-x-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
-                <span className={`${conthrax} text-white text-[10px] tracking-widest`}>LIVE FEED: HQ</span>
+        {/* ─── CONTENT MATRIX ─── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 w-full">
+          
+          {/* PRIMARY PROTOCOL PANEL */}
+          <div className="lg:col-span-8 group">
+            <div className="h-full bg-[#050505] border border-white/5 rounded-[32px] p-8 md:p-14 relative overflow-hidden flex flex-col justify-between transition-all duration-500 group-hover:border-cyan-500/20">
+              {/* Background Decor */}
+              <div className="absolute top-0 right-0 p-10 opacity-[0.03] pointer-events-none rotate-12 group-hover:opacity-[0.07] transition-opacity">
+                <Globe size={300} className="text-cyan-400" />
               </div>
-              <div className={`${conthrax} text-cyan-400/40 text-[9px] tracking-[0.8em] uppercase`}>
-                COORD: 20.35°N / 85.81°E
+
+              <div className="relative z-10 max-w-2xl">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="h-px w-12 bg-cyan-500/40" />
+                  <span className={`${conthrax} text-cyan-500 text-[10px] tracking-[0.5em] uppercase`}>Comm-Protocol</span>
+                </div>
+                
+                <h2 className={`${conthrax} text-2xl md:text-3xl text-white mb-6 uppercase`}>
+                  Secure Uplink <span className="opacity-40">Request</span>
+                </h2>
+                
+                <p className="text-white/50 text-base md:text-xl font-light leading-relaxed mb-10">
+                  K1000 is KIIT University's flagship tech & innovation society.
+                  Reach out to our team for collaborations, research, and opportunities.
+                  We're always ready to connect.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <Shield size={18} className="text-cyan-500" />
+                      <h4 className={`${conthrax} text-[11px] text-white/90 tracking-widest uppercase`}>Infrastructure</h4>
+                    </div>
+                    <p className="text-white/30 text-xs leading-relaxed">K1000 operates at the intersection of emerging technologies and applied research,
+backed by KIIT University's high-performance computing infrastructure
+and state-of-the-art innovation labs.</p>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <Zap size={18} className="text-cyan-500" />
+                      <h4 className={`${conthrax} text-[11px] text-white/90 tracking-widest uppercase`}>Response Speed</h4>
+                    </div>
+                    <p className="text-white/30 text-xs leading-relaxed">We typically respond to all inquiries within 24 hours.
+Our team is committed to timely and meaningful communication.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Data Strip */}
+              <div className="mt-16 flex flex-wrap gap-4 border-t border-white/5 pt-8">
+                {[
+                  { label: "IP_ROUTE", val: "172.16.254.1" },
+                  { label: "ENCRYPT", val: "AES-256-GCM" },
+                  { label: "LATENCY", val: "14ms" },
+                  { label: "UPLINK", val: "ACTIVE" }
+                ].map((item, i) => (
+                  <div key={i} className="px-4 py-2 bg-white/[0.03] rounded-lg border border-white/5">
+                    <span className="text-[8px] text-white/20 block uppercase font-mono">{item.label}</span>
+                    <span className="text-[10px] text-cyan-400 font-mono">{item.val}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </div>
 
-        {/* ─── CONTACT INFO SECTION ─── */}
-        <motion.div
-          className="lg:w-1/2 p-10 md:p-16 flex flex-col justify-center relative bg-cyan-400/[0.01]"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <div className="relative z-10">
-            <h1 className={`${conthrax} text-4xl md:text-5xl text-white mb-6 uppercase tracking-tight`}>
-              Contact <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(0,247,255,0.5)]">Us</span>
-            </h1>
-
-            <p className="text-white/40 text-sm md:text-base font-light leading-relaxed mb-12 max-w-md">
-              Establish a direct uplink with the K-1000 Command Center for 
-              research authorization and guild inquiries.
-            </p>
-
-            <div className="space-y-8">
-              <div className="flex items-center space-x-6 group">
-                <div className="p-3 rounded-xl bg-cyan-500/5 border border-cyan-500/20 group-hover:border-cyan-400 transition-all">
-                  <MapPin className="text-cyan-400" size={18} />
-                </div>
-                <div>
-                  <h4 className={`${conthrax} text-[8px] text-cyan-500/50 uppercase tracking-[0.4em] mb-1`}>Location</h4>
-                  <p className="text-white/70 text-sm tracking-wide">KIIT University, Bhubaneswar</p>
-                </div>
+          {/* CONTACT VECTOR PANEL */}
+          <div className="lg:col-span-4 flex flex-col gap-4">
+            <div className="flex-1 bg-gradient-to-b from-[#0a0a0a] to-[#050505] border border-cyan-500/30 rounded-[32px] p-8 md:p-10 shadow-[0_0_80px_rgba(0,247,255,0.05)] relative overflow-hidden group">
+              <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-700 -rotate-12 group-hover:rotate-0">
+                <Cpu size={280} />
               </div>
 
-              <div className="flex items-center space-x-6 group">
-                <div className="p-3 rounded-xl bg-cyan-500/5 border border-cyan-500/20 group-hover:border-cyan-400 transition-all">
-                  <Phone className="text-cyan-400" size={18} />
+              <div className="space-y-12 relative z-10">
+                {/* NODE: LOCATION */}
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                      <MapPin size={20} />
+                    </div>
+                    <span className={`${conthrax} text-[10px] text-cyan-500/60 tracking-[0.3em] uppercase`}>College</span>
+                  </div>
+                  <p className="text-white text-lg font-light pl-2">KIIT University, <br /><span className="text-white/40">Bhubaneswar, India</span></p>
                 </div>
-                <div>
-                  <h4 className={`${conthrax} text-[8px] text-cyan-500/50 uppercase tracking-[0.4em] mb-1`}>Point of Contact</h4>
-                  <p className="text-white/70 text-sm tracking-wide">
-                    Dr. Ajit Kumar Pasayat <br />
-                    <span className="text-cyan-400/60 font-mono text-xs">+91 70085 88187</span>
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex items-center space-x-6 group">
-                <div className="p-3 rounded-xl bg-cyan-500/5 border border-cyan-500/20 group-hover:border-cyan-400 transition-all">
-                  <Mail className="text-cyan-400" size={18} />
+                {/* NODE: LEADERSHIP */}
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                      <Phone size={20} />
+                    </div>
+                    <span className={`${conthrax} text-[10px] text-cyan-500/60 tracking-[0.3em] uppercase`}>Faculty In-Charge</span>
+                  </div>
+                  <div className="pl-2">
+                    <p className="text-white text-lg font-light mb-1">Dr. Ajit Kumar Pasayat</p>
+                    <p className="text-cyan-400/80 font-mono text-sm tracking-tighter">+91 70085 88187</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className={`${conthrax} text-[8px] text-cyan-500/50 uppercase tracking-[0.4em] mb-1`}>Comm Link</h4>
-                  <p className={`${conthrax} text-cyan-400/80 text-[10px] tracking-widest hover:text-cyan-300 transition-colors`}>
+
+                {/* NODE: DIGITAL */}
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                      <Mail size={20} />
+                    </div>
+                    <span className={`${conthrax} text-[10px] text-cyan-500/60 tracking-[0.3em] uppercase`}>Email</span>
+                  </div>
+                  <p className={`${conthrax} text-cyan-300 text-xs md:text-sm tracking-widest pl-2 hover:text-white transition-colors cursor-pointer`}>
                     k.1000@kiit.ac.in
                   </p>
                 </div>
               </div>
             </div>
+
+            {/* LOWER STATUS HUD */}
+            <div className="bg-[#080808] border border-white/5 rounded-[24px] p-6 flex flex-col justify-between overflow-hidden relative">
+              <div className="flex items-center justify-between mb-4">
+                <span className={`${conthrax} text-[9px] text-white/30 uppercase tracking-widest`}>Signal Strength</span>
+                <Activity size={14} className="text-cyan-500 animate-pulse" />
+              </div>
+              <div className="flex gap-1 h-1.5 w-full">
+                {[80, 95, 70, 85, 90, 100, 60, 95].map((h, i) => (
+                  <div key={i} className="flex-1 bg-cyan-500/20 rounded-full relative overflow-hidden">
+                    <div className="absolute bottom-0 w-full bg-cyan-400" style={{ height: `${h}%` }} />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          
-          <div className="absolute bottom-[-50px] right-[-50px] opacity-[0.02] pointer-events-none rotate-12">
-            <Cpu size={350} />
+        </div>
+
+        {/* FOOTER DECOR */}
+        <div className="mt-12 flex justify-between items-center opacity-20 px-4 w-full">
+          <div className={`${conthrax} text-[8px] tracking-[0.8em] text-white uppercase`}>
+            © K-1000 Organisation
           </div>
-        </motion.div>
+          <div className="flex gap-4">
+            <Terminal size={14} className="text-white" />
+            <Cpu size={14} className="text-white" />
+          </div>
+        </div>
       </motion.div>
     </div>
   );
