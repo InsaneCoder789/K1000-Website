@@ -1,6 +1,6 @@
 /**
  * K-1000 Event Registry
- * Using local assets from public/events/ for maximum performance.
+ * Updated with Dark Route and Kampus Konversations Ep. 2
  */
 
 export interface K1000Event {
@@ -17,6 +17,38 @@ export interface K1000Event {
 
 export const EVENTS: K1000Event[] = [
   {
+    id: "kampus-konversations-ep2",
+    title: "Kampus Konversations Ep.2",
+    date: "February 2026",
+    description: "The second installment of our flagship series featured Dr. Seth M. Cohen, a Research Professional at UC San Diego. The session focused on the nuances of global research, specialized higher education in the US, and bridging the gap between Indian academia and international labs.",
+    category: "Series",
+    link: "https://www.linkedin.com/posts/k1000-kiit_k1000-kampuskonversations-ucsd-activity-7430008194581782528-StxS",
+    status: "COMPLETED",
+    highlights: [
+      "Expert Insights: Featuring Dr. Seth M Cohen from UC San Diego (UCSD).",
+      "Global Roadmap: Strategies for securing research positions in top-tier US universities.",
+      "Interactive Lab Culture: A deep dive into the environment of international research facilities.",
+      "Uplink for aspiring researchers and high-performance engineering students."
+    ],
+    gallery: ["/events/kkep2.jpg"]
+  },
+    {
+    id: "dark-route-2025",
+    title: "Dark Route",
+    date: "January 2026", // Based on the "2 days ago" context of the recent post
+    description: "A massive 15-society crossover initiative managed by K-1000. This two-day multi-campus event bridged the gap between different technical and creative domains, fostering a unique environment of healthy competition and inter-disciplinary collaboration.",
+    category: "Hackathon",
+    link: "https://www.instagram.com/p/DSmUPwBkXFh/",
+    status: "COMPLETED",
+    highlights: [
+      "15-Society Collaboration: Managed logistics and execution across multiple campuses.",
+      "Day 1: Campus-wide strategic treasure hunt testing critical thinking and adaptability.",
+      "Day 2: Intensive Hackathon featuring 5 diverse real-world problem statements.",
+      "Cross-Community Impact: Built lasting networks between 15 different student organizations."
+    ],
+    gallery: ["/events/darkroute.png"] 
+  },
+  {
     id: "sharkathon-2025",
     title: "Shark-A-Thon",
     date: "December 2025",
@@ -30,7 +62,7 @@ export const EVENTS: K1000Event[] = [
       "Focused on Scalable Tech Startups and real-world solving.",
       "Direct feedback on product-market fit."
     ],
-    gallery: ["/events/sharkathon.png"] // Local Path
+    gallery: ["/events/sharkathon.png"]
   },
   {
     id: "kampus-konversations-ep1",
@@ -46,7 +78,7 @@ export const EVENTS: K1000Event[] = [
       "Research opportunities in core engineering domains.",
       "Attended by 120+ high-potential candidates."
     ],
-    gallery: ["/events/kkep1.jpg"] // Local Path
+    gallery: ["/events/kkep1.jpg"]
   },
   {
     id: "ignithon-2025",
@@ -62,7 +94,7 @@ export const EVENTS: K1000Event[] = [
       "Over 1000+ registration interests across the campus.",
       "Felicitation by the Vice Chancellor and Registrar of KIIT."
     ],
-    gallery: ["/events/ignithon.png"] // Local Path
+    gallery: ["/events/ignithon.png"]
   }
 ];
 

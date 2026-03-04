@@ -38,7 +38,6 @@ export default function SharedHeader() {
   const pathname = usePathname(); 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Helper to determine active state
   const getIsActive = (key: NavKey) => pathname === ROUTES[key];
 
   const goTo = (key: NavKey) => {
@@ -55,7 +54,7 @@ export default function SharedHeader() {
     <>
       <header className={`fixed top-0 left-0 w-full px-6 md:px-12 py-6 md:py-8 flex md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-between z-[110] ${conthrax} bg-black/10 backdrop-blur-sm md:bg-transparent`}>
         
-        {/* Left Section */}
+        {/* Left Section: Logo & EST. Tag */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }} 
           animate={{ opacity: 1, x: 0 }}
@@ -68,11 +67,16 @@ export default function SharedHeader() {
               alt="K-1000"
             />
           </button>
-          <div className="h-4 w-[1px] bg-cyan-500/30 hidden lg:block" />
-          <span className="text-[8px] tracking-[0.5em] text-cyan-500/50 hidden lg:block uppercase">EST. 2026</span>
+          
+          {/* CHANCE MADE HERE: 
+              Changed hidden lg:block to hidden xl:block 
+              This removes the "EST. 2025" tag earlier when the screen narrows 
+          */}
+          <div className="h-4 w-[1px] bg-cyan-500/30 hidden xl:block" />
+          <span className="text-[8px] tracking-[0.5em] text-cyan-500/50 hidden xl:block uppercase">EST. 2025</span>
         </motion.div>
 
-        {/* Center: Desktop Nav */}
+        {/* Center: Desktop Nav - Tightened padding for better fit */}
         <motion.nav
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,7 +86,7 @@ export default function SharedHeader() {
             <button
               key={key}
               onClick={() => goTo(key)}
-              className={`px-3 lg:px-5 py-2 text-[7px] lg:text-[8px] uppercase tracking-[0.2em] font-bold rounded-full transition-all duration-300 outline-none
+              className={`px-3 lg:px-4 py-2 text-[7px] lg:text-[8px] uppercase tracking-[0.2em] font-bold rounded-full transition-all duration-300 outline-none
                 ${getIsActive(key) 
                   ? "text-[#00f7ff] bg-cyan-500/10 shadow-[inset_0_0_10px_rgba(0,247,255,0.1)]" 
                   : "text-white/40 hover:text-[#00f7ff] hover:bg-white/5"
@@ -93,17 +97,19 @@ export default function SharedHeader() {
           ))}
         </motion.nav>
 
-        {/* Right Section */}
+        {/* Right Section: System Status & KIIT Logo */}
         <motion.div 
           initial={{ opacity: 0, x: 20 }} 
           animate={{ opacity: 1, x: 0 }} 
           className="flex items-center justify-end gap-4 md:gap-6"
         >
+          {/* Uplink status hides on smaller desktop widths to save space */}
           <div className="text-right hidden xl:block">
-            <p className="text-[8px] text-cyan-500/40 tracking-widest leading-none mb-1 uppercase">SYSTEM_UPLINK</p>
-            <p className="text-[10px] text-cyan-400 uppercase leading-none font-bold">Nominal</p>
+            <p className="text-[8px] text-cyan-500/40 tracking-widest leading-none mb-1 uppercase">UPLINK</p>
+            <p className="text-[10px] text-cyan-400 uppercase leading-none font-bold">HEALTHY</p>
           </div>
           <img src="/kiit-logo.png" className="h-10 md:h-14 w-auto object-contain" alt="KIIT" />
+          
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
             className="md:hidden text-[#00f7ff] p-2 hover:bg-white/5 rounded-lg transition-colors outline-none"
