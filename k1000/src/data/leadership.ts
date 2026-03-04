@@ -70,7 +70,7 @@ export const leadership = {
           position: "Director",
           branch: "Event Management",
           image:
-            "https://res.cloudinary.com/vanxodus305/image/upload/v1754423648/K-1000/Vanisha_Nair_dbyu88.heic",
+            "https://res.cloudinary.com/vanxodus305/image/upload/v1754423648/K-1000/Vanisha_Nair_dbyu88.png",
         },
         {
           name: "Shruti Shikha Padhi",
