@@ -3,7 +3,8 @@
 ### KIIT University's Official Research & Development Organization
 **Project Status:** `In-Progress`
 
-<img width="1874" height="968" alt="image" src="https://github.com/user-attachments/assets/0d5df0cc-58cd-489a-a4b7-1d935d60e04b" />
+<img width="3018" height="1674" alt="image" src="https://github.com/user-attachments/assets/2841c2b1-d36b-4d17-8ec9-d187479a7397" />
+
 
 
 ## ⚡ Overview
