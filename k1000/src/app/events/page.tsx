@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { EVENTS, K1000Event } from "@/data/event";
-import { Calendar, ExternalLink, Activity, ShieldCheck, X } from "lucide-react";
-import SharedHeader from "../../../components/ui/SharedHeader";
+import { Calendar, ExternalLink, Activity, ShieldCheck } from "lucide-react";
+import SharedHeader from "../../components/ui/SharedHeader";
 
 const conthrax = "font-['Conthrax',_sans-serif]";
 const orbitron = "font-['Orbitron',_sans-serif]";
@@ -33,23 +33,6 @@ const Events = () => {
       
       <SharedHeader />
 
-      {/* ─── PERSISTENT CLOSE OVERLAY ─── */}
-      <div className="fixed bottom-10 left-0 w-full flex justify-center z-[200] pointer-events-none px-4">
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => router.push("/")}
-          className="pointer-events-auto group flex items-center gap-5 bg-black/80 backdrop-blur-2xl border border-white/20 px-10 py-4 rounded-full hover:border-white transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.9)]"
-        >
-          <X className="text-white group-hover:rotate-90 transition-all duration-300" size={20} />
-          <span className={`${conthrax} text-[13px] md:text-[15px] tracking-[0.5em] uppercase text-white font-bold transition-all duration-300 group-hover:drop-shadow-[0_0_10px_white]`}>
-            CLOSE
-          </span>
-        </motion.button>
-      </div>
-
       {/* ================================================================
           1. DESKTOP LAYOUT (Sidebar + Content View)
           ================================================================
@@ -60,10 +43,10 @@ const Events = () => {
           <div className="p-10 pt-12 border-b border-white/5">
             <div className="flex items-center space-x-3 mb-4">
               <Activity size={18} className="text-cyan-400" />
-              <span className={`${orbitron} text-[10px] text-cyan-500/60 tracking-[0.4em] uppercase font-bold`}>Archives</span>
+              <span className={`${conthrax} text-[10px] text-cyan-500/60 tracking-[0.4em] uppercase font-black`}>Archives</span>
             </div>
-            <h1 className={`${conthrax} text-3xl text-white uppercase leading-tight tracking-tighter`}>
-              Tactical <br />
+            <h1 className={`${conthrax} text-3xl text-white uppercase leading-tight tracking-widest font-black`}>
+              Event <br />
               <span className="text-cyan-400 drop-shadow-[0_0_10px_rgba(0,247,255,0.3)]">Registry</span>
             </h1>
           </div>
@@ -83,7 +66,7 @@ const Events = () => {
                   <span className={`${orbitron} text-[9px] tracking-[0.2em] font-bold ${selectedEvent.id === event.id ? "text-cyan-400" : "text-white/20"}`}>
                     {event.date}
                   </span>
-                  <span className={`${conthrax} text-xs text-white uppercase tracking-wider`}>{event.title}</span>
+                  <span className={`${conthrax} text-xs text-white uppercase tracking-wider font-black`}>{event.title}</span>
                 </div>
               </button>
             ))}
@@ -106,10 +89,10 @@ const Events = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#020202] via-transparent to-transparent" />
             <div className="absolute bottom-12 left-16 right-16 flex items-end justify-between z-20">
               <div className="max-w-2xl">
-                <span className={`${orbitron} px-4 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-[9px] text-cyan-400 uppercase font-black tracking-widest mb-6 inline-block`}>
+                <span className={`${conthrax} px-4 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-[9px] text-cyan-400 uppercase font-black tracking-widest mb-6 inline-block`}>
                   {selectedEvent.category}
                 </span>
-                <h2 className={`${conthrax} text-6xl text-white uppercase leading-none tracking-tighter`}>
+                <h2 className={`${conthrax} text-6xl text-white uppercase leading-none tracking-widest font-black`}>
                   {selectedEvent.title}
                 </h2>
               </div>
@@ -117,7 +100,7 @@ const Events = () => {
                 whileHover={{ scale: 1.05 }} 
                 href={selectedEvent.link} 
                 target="_blank" 
-                className={`${conthrax} flex items-center space-x-4 px-10 py-5 bg-cyan-500 text-black rounded-full font-bold text-[11px] uppercase tracking-widest shadow-[0_0_20px_rgba(0,247,255,0.3)]`}
+                className={`${conthrax} flex items-center space-x-4 px-10 py-5 bg-cyan-500 text-black rounded-full font-black text-[11px] uppercase tracking-widest shadow-[0_0_20px_rgba(0,247,255,0.3)]`}
               >
                 <span>Uplink Report</span>
                 <ExternalLink size={16} />
@@ -137,7 +120,7 @@ const Events = () => {
             </div>
             <div className="col-span-5">
               <div className="p-10 rounded-[40px] bg-cyan-400/[0.02] border border-cyan-400/10">
-                <h4 className={`${conthrax} text-[10px] text-cyan-400 uppercase tracking-[0.5em] mb-10`}>Critical Highlights</h4>
+                <h4 className={`${conthrax} text-[10px] text-cyan-400 uppercase tracking-[0.5em] mb-10 font-black`}>Critical Highlights</h4>
                 <div className="space-y-8">
                   {selectedEvent.highlights.map((point, i) => (
                     <div key={i} className="flex space-x-6">
@@ -153,7 +136,7 @@ const Events = () => {
       </div>
 
       {/* ================================================================
-          2. MOBILE LAYOUT (Infinite Feed with Top Padding)
+          2. MOBILE LAYOUT (Infinite Feed)
           ================================================================
       */}
       <div className="lg:hidden flex flex-col w-full relative z-10 pt-24">
@@ -163,11 +146,11 @@ const Events = () => {
               <img src={event.gallery[0]} alt={event.title} className="absolute inset-0 w-full h-full object-cover object-top brightness-[0.35]" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
               <div className="absolute bottom-8 left-6 right-6">
-                <span className={`${orbitron} px-3 py-1 bg-cyan-500/10 border border-cyan-500/40 text-[8px] text-cyan-400 uppercase font-black tracking-widest mb-3 inline-block`}>
+                <span className={`${conthrax} px-3 py-1 bg-cyan-500/10 border border-cyan-500/40 text-[8px] text-cyan-400 uppercase font-black tracking-widest mb-3 inline-block`}>
                   {event.category}
                 </span>
-                <h2 className={`${conthrax} text-3xl text-white uppercase leading-tight mb-6`}>{event.title}</h2>
-                <a href={event.link} target="_blank" className={`${conthrax} inline-flex items-center space-x-3 bg-cyan-500 px-7 py-4 rounded-full text-black font-bold text-[9px] uppercase tracking-widest`}>
+                <h2 className={`${conthrax} text-3xl text-white uppercase leading-tight mb-6 font-black tracking-widest`}>{event.title}</h2>
+                <a href={event.link} target="_blank" className={`${conthrax} inline-flex items-center space-x-3 bg-cyan-500 px-7 py-4 rounded-full text-black font-black text-[9px] uppercase tracking-widest`}>
                   <span>Uplink Report</span>
                   <ExternalLink size={14} />
                 </a>
@@ -178,13 +161,13 @@ const Events = () => {
               <div className="space-y-4">
                 <div className="flex items-center space-x-2 text-cyan-500/40">
                   <ShieldCheck size={18} />
-                  <span className={`${orbitron} text-[9px] uppercase tracking-widest font-bold`}>Mission Briefing</span>
+                  <span className={`${conthrax} text-[9px] uppercase tracking-widest font-black`}>Mission Briefing</span>
                 </div>
-                <p className="text-white/50 text-base italic leading-relaxed pl-5 border-l border-cyan-500/20">"{event.description}"</p>
+                <p className="text-white/50 text-base italic leading-relaxed font-light pl-5 border-l border-cyan-500/20">"{event.description}"</p>
               </div>
 
               <div className="p-8 rounded-[32px] bg-cyan-400/[0.03] border border-cyan-400/10">
-                <h4 className={`${conthrax} text-[9px] text-cyan-400 uppercase tracking-widest mb-8`}>Critical Highlights</h4>
+                <h4 className={`${conthrax} text-[9px] text-cyan-400 uppercase tracking-widest mb-8 font-black`}>Critical Highlights</h4>
                 <div className="space-y-6">
                   {event.highlights.map((point, i) => (
                     <div key={i} className="flex space-x-4">
@@ -203,8 +186,9 @@ const Events = () => {
           </section>
         ))}
 
+        {/* STYLIZED ARCHIVE FOOTER FOR MOBILE */}
         <footer className="py-20 flex flex-col items-center justify-center opacity-20 bg-black">
-           <p className={`${conthrax} text-[9px] uppercase tracking-[1em]`}>Archive Terminal</p>
+           <p className={`${conthrax} text-[9px] uppercase tracking-[1em] font-black`}>Archive Terminal</p>
         </footer>
       </div>
     </div>
