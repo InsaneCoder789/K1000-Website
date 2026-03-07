@@ -11,9 +11,9 @@ import gsap from "gsap";
 import Link from "next/link";
 
 import SharedHeader from "../../components/ui/SharedHeader"; 
-import Footer from "../../components/footer/Footer"; // Import the Footer component
+import Footer from "../../components/footer/Footer"; 
 import { domains } from "../../data/domain";
-import DomainHoloPanel from "../ui/DomainHoloPanel";
+import DomainHoloPanel from "../../components/ui/DomainHoloPanel";
 import data from "@/data/data.json"; 
 
 const conthrax = "font-['Conthrax',_sans-serif]";
@@ -22,7 +22,6 @@ const iconMap: Record<string, LucideIcon> = {
   Rocket, FileText, BookOpen, Star, Award, Globe, Lightbulb, Users,
 };
 
-// ─── GSAP BACKGROUND (UNTOUCHED) ───
 const CubeBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -121,6 +120,12 @@ export default function UnifiedPortal() {
   const allNodes = useMemo(() => [...LEFT_NODES, ...RIGHT_NODES], []);
   const activeDomain = domains.find(d => d.key === activeDomainKey);
 
+  // Function to clean states when closing the panel
+  const handlePanelClose = () => {
+    setActiveDomainKey(null);
+    setHoveredNode(null); // Reset node glow on close
+  };
+
   const stats = [
     { number: "100+", label: "Projects" }, { number: "50+", label: "Publications" },
     { number: "20+", label: "Patents Filed" }, { number: "20+", label: "Collaborations" },
@@ -168,7 +173,12 @@ export default function UnifiedPortal() {
                       <div className={`mt-16 text-[12px] tracking-[1.4em] text-cyan-400 font-black uppercase text-center drop-shadow-[0_0_12px_#00f7ff] brightness-110 ${conthrax}`}>Train • Transform • Transcend</div>
                     </div>
                     {allNodes.map((node) => (
-                      <motion.button key={node.key} onMouseEnter={() => setHoveredNode(node.key)} onMouseLeave={() => setHoveredNode(null)} onClick={() => setActiveDomainKey(node.key)} className={`absolute -translate-y-1/2 flex items-center cursor-pointer group z-30 ${LEFT_NODES.includes(node) ? "-translate-x-full flex-row" : "flex-row-reverse"}`} style={{ top: `${node.y}%`, left: `${node.x}%` }}>
+                      <motion.button key={node.key} onMouseEnter={() => setHoveredNode(node.key)} onMouseLeave={() => setHoveredNode(null)} 
+                        onClick={() => {
+                          setActiveDomainKey(node.key);
+                          setHoveredNode(null); // Immediately reset hover state on click
+                        }} 
+                        className={`absolute -translate-y-1/2 flex items-center cursor-pointer group z-30 ${LEFT_NODES.includes(node) ? "-translate-x-full flex-row" : "flex-row-reverse"}`} style={{ top: `${node.y}%`, left: `${node.x}%` }}>
                         <div className={`w-2 h-10 border-y-2 ${LEFT_NODES.includes(node) ? 'border-l-2' : 'border-r-2'} ${hoveredNode === node.key ? 'border-white' : 'border-cyan-400'}`} />
                         <div className={`relative px-8 py-4 min-w-[340px] backdrop-blur-2xl border-2 transition-all duration-300 ${hoveredNode === node.key ? 'bg-white text-black border-white shadow-[0_0_40px_#fff]' : 'bg-black/90 text-white border-cyan-400 shadow-[0_0_30px_rgba(0,247,255,0.4)]'}`}><div className="flex items-center gap-6"><div className={`p-2 border-2 ${hoveredNode === node.key ? 'border-black text-black' : 'border-cyan-400 text-cyan-400 brightness-110 drop-shadow-[0_0_5px_#00f7ff]'}`}>{node.icon}</div><span className={`text-[12px] font-black tracking-widest uppercase ${conthrax} ${hoveredNode === node.key ? 'text-black' : 'text-white brightness-110'}`}>{node.label}</span></div></div>
                         <div className={`w-10 h-[2px] ${hoveredNode === node.key ? 'bg-white shadow-[0_0_20px_#fff]' : 'bg-cyan-400 shadow-[0_0_15px_#00f7ff]'}`} /><div className={`w-4 h-4 rotate-45 border-2 ${hoveredNode === node.key ? 'bg-white border-white' : 'bg-[#010103] border-cyan-400 shadow-[0_0_15px_#00f7ff]'}`} />
@@ -187,9 +197,9 @@ export default function UnifiedPortal() {
             <div className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse brightness-110" /><span className={`text-[10px] tracking-widest text-cyan-400 font-black uppercase brightness-110 drop-shadow-[0_0_5px_#00f7ff] ${conthrax}`}>Link: Active</span></div>
             <div className="flex items-center gap-3"><CpuIcon size={16} className="text-cyan-400 brightness-110" /><span className="text-[9px] tracking-widest text-white font-normal">LOAD: 12.4%</span></div>
           </div>
-          <div className="flex flex-col items-center"><div className={`text-[8px] tracking-[1.2em] font-mono text-cyan-300 uppercase font-black opacity-70 ${conthrax}`}>@2026 </div></div>
+          <div className="flex flex-col items-center"><div className={`text-[8px] tracking-[1.2em] font-mono text-cyan-300 uppercase font-black opacity-70 ${conthrax}`}>@2026 K-1000</div></div>
           <div className="flex flex-col items-end gap-1">
-            <span className="text-[9px] tracking-widest text-white/60 font-normal uppercase">Sync_Time</span>
+            <span className="text-[9px] tracking-widest text-white/60 font-normal uppercase">TIMESTAMP</span>
             <span className="text-3xl font-mono text-cyan-400 brightness-110 drop-shadow-[0_0_10px_#00f7ff]">{currentTime.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit' })}</span>
           </div>
         </div>
@@ -229,19 +239,17 @@ export default function UnifiedPortal() {
  {/* SECTION: ABOUT K-1000 */}
         <section className="w-full px-6 md:px-20 py-32 border-t border-white/10">
           <div className="w-full max-w-[1500px] mx-auto">
-            {/* 1. Centered Big Title Heading */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-24 w-full text-center" // Added text-center here
+              className="mb-24 w-full text-center"
             >
               <h2 className={`${conthrax} text-5xl md:text-8xl text-white uppercase tracking-tighter leading-none font-black`}>
                 About <span className="text-cyan-400 brightness-110 drop-shadow-[0_0_15px_rgba(0,247,255,0.5)]">K-1000</span>
               </h2>
             </motion.div>
 
-            {/* 2. Content Row: Image (Left) & Description (Right) */}
             <div className="grid lg:grid-cols-2 gap-16 items-start">
               <motion.div 
                 initial={{ opacity: 0, x: -30 }}
@@ -268,7 +276,6 @@ export default function UnifiedPortal() {
                   The program encourages students to develop impactful projects that address real-world challenges across both technical and non-technical domains, thereby contributing to scientific, technological, and societal advancement.
                 </p>
                 
-                {/* Feature Pills */}
                 <div className="grid grid-cols-2 gap-4 pt-6">
                   {["Hands-on projects", "Research & Patents", "Industry Pipelines", "Technical Mastery"].map((text, i) => (
                     <div key={i} className="flex items-center gap-3 bg-white/[0.03] p-4 rounded-xl border border-white/10">
@@ -282,7 +289,6 @@ export default function UnifiedPortal() {
           </div>
         </section>
 
-        {/* SECTION: BENEFITS */}
         <section className="w-full max-w-7xl mx-auto pb-48 px-10 flex flex-col items-center">
           <h2 className={`${conthrax} text-3xl md:text-5xl text-center tracking-widest text-cyan-400 mb-24 uppercase font-black brightness-110 drop-shadow-[0_0_15px_#00f7ff]`}>Benefits & Perks</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
@@ -303,12 +309,16 @@ export default function UnifiedPortal() {
           </div>
         </section>
 
-        {/* INTEGRATED SHARED FOOTER */}
         <Footer />
       </div>
 
       <AnimatePresence mode="wait">
-        {activeDomain && <DomainHoloPanel domain={activeDomain as any} onClose={() => setActiveDomainKey(null)} />}
+        {activeDomain && (
+          <DomainHoloPanel 
+            domain={activeDomain as any} 
+            onClose={handlePanelClose} // Use the new handler here
+          />
+        )}
       </AnimatePresence>
     </div>
   );

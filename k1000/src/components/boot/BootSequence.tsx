@@ -2,24 +2,47 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import SystemCanvas from "../system/SystemCanvas";
+import SystemCanvas from "../../app/home/page";
 
 const conthrax = "font-['Conthrax',_sans-serif]";
 
 export default function BootSequence() {
-  const [stage, setStage] = useState<"charging" | "ready">("charging");
+  // Use "initializing" as a middle ground to prevent UI jumps
+  const [stage, setStage] = useState<"charging" | "ready" | "initializing">("initializing");
   const [status, setStatus] = useState("CORE_STANDBY");
+
+  useEffect(() => {
+    // Check if we've already booted in this session
+    const hasBooted = sessionStorage.getItem("k1000_system_booted");
+
+    if (hasBooted) {
+      setStage("ready");
+    } else {
+      setStage("charging");
+    }
+  }, []);
 
   useEffect(() => {
     if (stage === "charging") {
       const statusSequence = [
-        { t: 400, msg: "CORE_POWER_STABLE" },
-        { t: 1500, msg: "INTERFACE_SYNC" },
-        { t: 2800, msg: "HANDSHAKE_COMPLETE" },
+        { t: 400, msg: "CORE POWER STABLE" },
+        { t: 1500, msg: "INTERFACE SYNC" },
+        { t: 2800, msg: "HANDSHAKE COMPLETE" },
       ];
-      statusSequence.forEach(step => setTimeout(() => setStatus(step.msg), step.t));
+      statusSequence.forEach(step => {
+        const timeout = setTimeout(() => setStatus(step.msg), step.t);
+        return () => clearTimeout(timeout);
+      });
     }
   }, [stage]);
+
+  const completeBoot = () => {
+    sessionStorage.setItem("k1000_system_booted", "true");
+    setTimeout(() => setStage("ready"), 800);
+  };
+
+  // Prevent rendering anything until we know the session state to avoid laggy flashes
+  if (stage === "initializing") return <div className="bg-black min-h-screen" />;
 
   return (
     <div className="bg-black min-h-screen">
@@ -49,22 +72,18 @@ export default function BootSequence() {
             {/* 2. THE SQUARE PRECISION MODULE */}
             <div className="relative z-10 flex flex-col items-center">
               <div className="relative flex items-center justify-center">
-                
-                {/* GEOMETRIC SQUARE BRACKETS */}
                 <motion.div 
                   initial={{ width: 320, height: 320, opacity: 0 }}
                   animate={{ width: 240, height: 240, opacity: 1 }}
                   transition={{ duration: 2, ease: "circOut" }}
                   className="absolute flex items-center justify-center border border-[#00f7ff]/10"
                 >
-                  {/* Four Sharp Corner Accents */}
                   <div className="absolute -top-[1px] -left-[1px] w-5 h-5 border-t-[2px] border-l-[2px] border-[#00f7ff]/40" />
                   <div className="absolute -top-[1px] -right-[1px] w-5 h-5 border-t-[2px] border-r-[2px] border-[#00f7ff]/40" />
                   <div className="absolute -bottom-[1px] -left-[1px] w-5 h-5 border-b-[2px] border-l-[2px] border-[#00f7ff]/40" />
                   <div className="absolute -bottom-[1px] -right-[1px] w-5 h-5 border-b-[2px] border-r-[2px] border-[#00f7ff]/40" />
                 </motion.div>
 
-                {/* THE LOGO (Sleek size) */}
                 <motion.img
                   src="/k1000-small.png"
                   alt="K-1000"
@@ -74,7 +93,6 @@ export default function BootSequence() {
                   className="w-40 h-auto brightness-110 drop-shadow-[0_0_20px_rgba(0,247,255,0.2)]"
                 />
 
-                {/* STEADY SOFT GLOW */}
                 <motion.div 
                    animate={{ opacity: [0.1, 0.2, 0.1] }}
                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -90,11 +108,10 @@ export default function BootSequence() {
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 3.5, ease: [0.4, 0, 0.2, 1] }}
-                    onAnimationComplete={() => setTimeout(() => setStage("ready"), 800)}
+                    onAnimationComplete={completeBoot}
                   />
                 </div>
 
-                {/* STATUS INDICATOR */}
                 <div className="mt-12 flex flex-col items-center gap-4">
                     <motion.div 
                         key={status}
@@ -105,7 +122,6 @@ export default function BootSequence() {
                         {status}
                     </motion.div>
                     
-                    {/* Slow-moving data blocks */}
                     <div className="flex gap-2">
                        {[...Array(4)].map((_, i) => (
                          <motion.div 
@@ -118,14 +134,6 @@ export default function BootSequence() {
                     </div>
                 </div>
               </div>
-            </div>
-
-            {/* 4. MINIMALIST CORNER ELEMENTS */}
-            <div className="absolute top-10 left-12 text-[8px] text-[#00f7ff]/30 tracking-[0.4em] uppercase">
-               Sys_Init // 45.0
-            </div>
-            <div className="absolute bottom-10 right-12 text-[8px] text-[#00f7ff]/30 tracking-[0.4em] uppercase">
-               Neural_Handshake // Verified
             </div>
           </motion.div>
         ) : (

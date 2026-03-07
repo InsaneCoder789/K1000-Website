@@ -1,19 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 export const ROUTES = {
-  home: "/Sections/home",
-  about: "/Sections/about",
-  benefits: "/Sections/benefits",
-  branches: "/Sections/branches",
-  departments: "/Sections/departments",
-  events: "/Sections/events",
-  apply: "/Sections/apply",
-  contact: "/Sections/contact",
+  home: "/",
+  about: "/about",
+  benefits: "/benefits",
+  branches: "/branches",
+  departments: "/departments",
+  events: "/events",
+  apply: "/apply",
+  contact: "/contact",
 } as const;
 
 export type NavKey = keyof typeof ROUTES;
@@ -38,6 +38,18 @@ export default function SharedHeader() {
   const pathname = usePathname(); 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // PRODUCTION OPTIMIZATION: Background Module Sync
+  // This fetches the code for all other pages as soon as the system initializes.
+  useEffect(() => {
+    NAV_ITEMS.forEach((key) => {
+      const route = ROUTES[key];
+      // Skip prefetching the current page
+      if (pathname !== route) {
+        router.prefetch(route);
+      }
+    });
+  }, [router, pathname]);
+
   const getIsActive = (key: NavKey) => pathname === ROUTES[key];
 
   const goTo = (key: NavKey) => {
@@ -45,9 +57,9 @@ export default function SharedHeader() {
     router.push(ROUTES[key]);
   };
 
-  const goToCanvas = () => {
+  const handleLogoClick = () => {
     setIsMobileMenuOpen(false);
-    router.push("/");
+    router.push(ROUTES.home);
   };
 
   return (
@@ -60,7 +72,7 @@ export default function SharedHeader() {
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-4"
         >
-          <button onClick={goToCanvas} className="hover:opacity-80 transition-opacity outline-none">
+          <button onClick={handleLogoClick} className="hover:opacity-80 transition-opacity outline-none">
             <img
               src="/k1000-logo.png"
               className="h-8 md:h-10 w-auto drop-shadow-[0_0_15px_#00f7ff]"
@@ -68,15 +80,11 @@ export default function SharedHeader() {
             />
           </button>
           
-          {/* CHANCE MADE HERE: 
-              Changed hidden lg:block to hidden xl:block 
-              This removes the "EST. 2025" tag earlier when the screen narrows 
-          */}
           <div className="h-4 w-[1px] bg-cyan-500/30 hidden xl:block" />
           <span className="text-[8px] tracking-[0.5em] text-cyan-500/50 hidden xl:block uppercase">EST. 2025</span>
         </motion.div>
 
-        {/* Center: Desktop Nav - Tightened padding for better fit */}
+        {/* Center: Desktop Nav */}
         <motion.nav
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -103,7 +111,6 @@ export default function SharedHeader() {
           animate={{ opacity: 1, x: 0 }} 
           className="flex items-center justify-end gap-4 md:gap-6"
         >
-          {/* Uplink status hides on smaller desktop widths to save space */}
           <div className="text-right hidden xl:block">
             <p className="text-[8px] text-cyan-500/40 tracking-widest leading-none mb-1 uppercase">UPLINK</p>
             <p className="text-[10px] text-cyan-400 uppercase leading-none font-bold">HEALTHY</p>
@@ -131,7 +138,7 @@ export default function SharedHeader() {
             <div className="absolute inset-0 opacity-10 pointer-events-none bg-[linear-gradient(to_right,#00f7ff03_1px,transparent_1px),linear-gradient(to_bottom,#00f7ff03_1px,transparent_1px)] bg-[size:40px_40px]" />
             <div className="relative z-10 flex flex-col h-full p-8">
               <div className="flex justify-between items-center mb-12">
-                <button onClick={goToCanvas} className="outline-none">
+                <button onClick={handleLogoClick} className="outline-none">
                   <img src="/k1000-logo.png" className="h-8 w-auto" alt="Logo" />
                 </button>
                 <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 border border-cyan-500/20 rounded-full">
