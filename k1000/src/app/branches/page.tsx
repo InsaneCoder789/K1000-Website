@@ -220,7 +220,7 @@ export default function BranchesPage() {
                   {branch.title}
                 </h3>
                 
-                <p className="text-white/40 text-xs md:text-sm leading-relaxed mb-8 flex-grow font-light">
+                <p className="text-white/60 text-xs md:text-xl leading-relaxed mb-8 flex-grow font-light">
                   {branch.desc}
                 </p>
 

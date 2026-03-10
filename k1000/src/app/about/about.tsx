@@ -171,28 +171,33 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* FOUNDER (BORDER CONTAINER REMOVED) */}
-        <section className="w-full px-6 md:px-20 py-16 md:py-24 flex flex-col items-center border-t border-white/5">
-          <div className="w-full max-w-[1400px] grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-              <img
-                src="/about/Founder.png"
-                className="w-full aspect-[4/5] object-cover object-[center_15%] brightness-90 shadow-2xl rounded-2xl md:rounded-[32px]"
-                alt="Founder"
-              />
-            <div className="space-y-6">
-              <h2 className={`${conthrax} text-2xl md:text-5xl text-white uppercase leading-tight tracking-wider font-black`}>
-                OUR <span className="text-cyan-400">FOUNDER</span>
-              </h2>
-              <div className="w-20 h-1 bg-cyan-400 shadow-[0_0_10px_#00f7ff]" />
-              <span className={`${conthrax} text-cyan-400 block text-sm md:text-lg tracking-widest uppercase font-bold`}>
-                Prof. Dr. Achyuta Samanta
-              </span>
-              <p className="text-sm md:text-lg text-white/50 leading-relaxed font-light tracking-wide text-justify">
-                Prof. Dr. Achyuta Samanta's life story reads like a powerful saga of grit, determination, and social responsibility. Born and brought up in poverty in a remote village in Odisha, he was dealt a cruel blow at the tender age of four when he lost his father, after which his life became a struggle for food and education for 15 long years. However, he persevered, and at the age of 22, joined teaching. At 25, he embarked on a journey that would change his own life, and the lives of thousands of people. With just Rs 5000 in his pocket, he started KIIT (Kalinga Institute of Industrial Technology) and KISS (Kalinga Institute of Social Sciences) in two rented houses.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* FOUNDER SECTION */}
+<section className="w-full px-6 md:px-20 py-16 md:py-24 flex flex-col items-center border-t border-white/5">
+  <div className="w-full max-w-[1400px] grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+    {/* FOUNDER IMAGE */}
+    <img
+      src="/about/Founder.png"
+      className="w-full h-auto object-contain brightness-90 shadow-2xl rounded-2xl md:rounded-[32px]"
+      alt="Founder"
+    />
+
+    {/* OPAQUE CONTAINER LAYER */}
+    <div className="p-8 md:p-12 rounded-3xl border border-white/10 bg-[#0a0a0c]/80 backdrop-blur-md shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+      <div className="space-y-6">
+        <h2 className={`${conthrax} text-2xl md:text-5xl text-white uppercase leading-tight tracking-wider font-black`}>
+          OUR <span className="text-cyan-400">FOUNDER</span>
+        </h2>
+        <div className="w-20 h-1 bg-cyan-400 shadow-[0_0_10px_#00f7ff]" />
+        <span className={`${conthrax} text-cyan-400 block text-sm md:text-lg tracking-widest uppercase font-bold`}>
+          Prof. Dr. Achyuta Samanta
+        </span>
+        <p className="text-sm md:text-lg text-white/70 leading-relaxed font-light tracking-wide text-justify">
+          Prof. Dr. Achyuta Samanta's life story reads like a powerful saga of grit, determination, and social responsibility. Born and brought up in poverty in a remote village in Odisha, he was dealt a cruel blow at the tender age of four when he lost his father, after which his life became a struggle for food and education for 15 long years. However, he persevered, and at the age of 22, joined teaching. At 25, he embarked on a journey that would change his own life, and the lives of thousands of people. With just Rs 5000 in his pocket, he started KIIT (Kalinga Institute of Industrial Technology) and KISS (Kalinga Institute of Social Sciences) in two rented houses.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
         {/* BOARD MEMBERS */}
         <section className="w-full max-w-7xl px-6 md:px-10 py-16 md:py-24 flex flex-col items-center">

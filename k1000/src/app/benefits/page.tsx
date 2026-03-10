@@ -208,7 +208,7 @@ export default function BenefitsPage() {
                 <h3 className={`${conthrax} text-base md:text-xl text-white mb-3 tracking-widest group-hover:text-cyan-400 transition-colors uppercase font-black`}>
                   {benefit.title}
                 </h3>
-                <p className="text-white/40 text-xs md:text-sm leading-relaxed font-light mb-8">{benefit.desc}</p>
+                <p className="text-white/40 text-xs md:text-xl leading-relaxed font-light mb-8">{benefit.desc}</p>
                 <div className="mt-auto pt-6 border-t border-white/5 w-full">
                   <p className={`${conthrax} text-[9px] md:text-[10px] text-cyan-400/60 uppercase tracking-widest font-bold`}>
                     {benefit.detail}
