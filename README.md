@@ -6,7 +6,8 @@
 **Version:** `0.1.0`  
 **Status:** `Development`
 
-![K-1000 Banner](https://github.com/user-attachments/assets/2841c2b1-d36b-4d17-8ec9-d187479a7397)
+<img width="3024" height="1644" alt="image" src="https://github.com/user-attachments/assets/5db15ef2-4924-487c-b2db-6c588be5627e" />
+
 
 ## ⚡ Overview
 
