@@ -6,8 +6,6 @@
 **Version:** `0.1.0`  
 **Status:** `Development`
 
-<img width="3024" height="1644" alt="image" src="https://github.com/user-attachments/assets/5db15ef2-4924-487c-b2db-6c588be5627e" />
-
 
 ## ⚡ Overview
 
